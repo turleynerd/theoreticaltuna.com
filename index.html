@@ -1,4 +1,58 @@
-<head>
-    <meta http-equiv="Refresh" content="0; URL=http://red.ventures/culturefest2021">
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
+  <!-- Set background -->
+  <style>
+    body {
+      background-image: url("images/bg.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-color: black;
+    }
   
+    #overlay {
+      width: 75%;
+      height: 75%;
+    }
+  
+    span {
+      display: inline-block;
+      position: absolute;
+      width: 300px;
+    }
+  </style>
+  
+  <body>
+    <!-- Add tuna overlay image -->
+    <div id="overlay">
+      <span id="random">
+        <img src="images/tuna.png" alt="tuna" style="width:100%;">
+      </span>
+    </div>
+    <!-- Add logo -->
+  
+  </body>
+  <!-- Make image fload around screen randomly -->
+  <script>
+    window.addEventListener('load', function () {
+      function moveDiv() {
+        var $span = $("#random");
+
+        $span.fadeOut(270, function () {
+          var maxLeft = $(window).width() - $span.width();
+          var maxTop = $(window).height() - $span.height();
+          var leftPos = Math.floor(Math.random() * (maxLeft + 1))
+          var topPos = Math.floor(Math.random() * (maxTop + 1))
+
+          $span.css({ left: leftPos, top: topPos }).fadeIn(270);
+        });
+      };
+
+      moveDiv();
+      setInterval(moveDiv, 270);
+    })
+  </script>
+  
+  </html>
