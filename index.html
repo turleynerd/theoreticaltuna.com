@@ -22,6 +22,13 @@
       position: absolute;
       width: 300px;
     }
+    p {
+      color: aliceblue;
+      font-size: 22px;
+      font-family: "Times New Roman", Times, serif;
+      text-shadow: 2px 2px 4px #000000;
+
+    }
   </style>
   
   <body>
@@ -30,11 +37,16 @@
       <span id="random">
         <img src="images/tuna.png" alt="tuna" style="width:100%;">
       </span>
+      <span id="random2">
+        <!-- add quote text with author-->
+        <p id="quote">Failed to load</p>
+        <p id="author">Failed to load</p>
+      </span>
     </div>
     <!-- Add logo -->
   
   </body>
-  <!-- Make image fload around screen randomly -->
+  <!-- Make image float around screen randomly -->
   <script>
     window.addEventListener('load', function () {
       function moveDiv() {
@@ -51,8 +63,43 @@
       };
 
       moveDiv();
-      setInterval(moveDiv, 270);
+      setInterval(moveDiv, 2000);
     })
+  </script>
+  <script>
+    window.addEventListener('load', function () {
+      function moveDiv() {
+        var $span = $("#random2");
+
+        $span.fadeOut(270, function () {
+          var maxLeft = $(window).width() - $span.width();
+          var maxTop = $(window).height() - $span.height();
+          var leftPos = Math.floor(Math.random() * (maxLeft + 1))
+          var topPos = Math.floor(Math.random() * (maxTop + 1))
+
+          $span.css({ left: leftPos, top: topPos }).fadeIn(270);
+        });
+      };
+
+      moveDiv();
+      setInterval(moveDiv, 3000);
+    })
+  </script>
+
+  <!-- Get quote from api-->
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        url: "https://quotes.rest/qod?category=inspire&language=en",
+        method: "GET",
+        success: function (data) {
+          // update paragraph with quote and author
+          $("#quote").text(data.contents.quotes[0].quote);
+          // prepend author name with hyphen
+          $("#author").text("- " + data.contents.quotes[0].author);
+        }
+      });
+    });
   </script>
   
   </html>
